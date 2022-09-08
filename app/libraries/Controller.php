@@ -11,10 +11,16 @@ class Controller
 	public function model($model)
 	{
 		// Require model file
-		require_once "../app/models/" . $model . ".php";
 
-		// Instatiate model
+		if (file_exists("../app/models/" . $model . ".php")) {
+			require_once "../app/models/" . $model . ".php";
+		} else {
+			die("Model does not exist");
+		}
 		return new $model();
+
+
+		// Instantiate model
 	}
 
 	//Load view

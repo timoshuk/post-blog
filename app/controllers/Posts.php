@@ -158,6 +158,13 @@ class Posts extends Controller
 	{
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+			// Get post
+			$post = $this->postModel->getPostById($id);
+
+			if ($post->user_id != $_SESSION["user_id"]) {
+				redirect("posts");
+			}
+
 			if ($this->postModel->deletePost($id)) {
 				flash("post_message", "Post Removed");
 				redirect("posts");
