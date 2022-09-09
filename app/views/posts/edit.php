@@ -4,7 +4,7 @@
 
 <div class="card card-body bg-light mt-5">
 	<h2>Edit Post</h2>
-	<form action="<?php echo URLROOT; ?>/posts/edit/<?php echo $data["id"]; ?>" method="post">
+	<form action="<?php echo URLROOT; ?>/posts/edit/<?php echo $data["id"]; ?>" method="post" enctype="multipart/form-data">
 		<div class="form-group">
 			<label for="title">Title: <sup>*</sup></label>
 			<input type="text" name="title" class="form-control form-control-lg 
