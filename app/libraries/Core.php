@@ -14,6 +14,7 @@ class Core
 	public function __construct()
 	{
 		$url = $this->getUrl();
+		
 
 
 		if (!empty($url[0]) && file_exists("../app/controllers/" . ucwords($url[0]) . ".php")) {
@@ -47,6 +48,7 @@ class Core
 
 	public function getUrl()
 	{
+
 		if (isset($_GET["url"])) {
 			$url = rtrim($_GET["url"], "/");
 			$url = filter_var($url, FILTER_SANITIZE_URL);

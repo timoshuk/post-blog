@@ -11,7 +11,7 @@
 
 		public function register($data)
 		{
-			$this->db->query("INSERT INTO users (name, email, password) VALUES(:name, :email, :password)");
+			$this->db->query("INSERT INTO users (name, email, password, is_admin) VALUES(:name, :email, :password, false)");
 
 			//Bind values
 			$this->db->bind(":name", $data["name"]);

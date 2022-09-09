@@ -124,18 +124,22 @@ class Posts extends Controller
 
 			// Get post
 			$post = $this->postModel->getPostById($id);
+			$user = $this->userModel->getUserById($_SESSION['user_id']);
 
 
 
-			if ($post->user_id != $_SESSION["user_id"]) {
-				redirect("posts");
-			}
 
+			if ($post->user_id = $_SESSION["user_id"] || $user->is_admin ) {
+				
 			$data = [
 				"id" => $id,
 				"title" => $post->title,
 				"body" => $post->body
-			];
+			];			
+			}else{
+				redirect("posts");
+			}
+
 		}
 
 		$this->view("posts/edit", $data);
@@ -145,10 +149,12 @@ class Posts extends Controller
 	{
 		$post = $this->postModel->getPostById($id);
 		$user = $this->userModel->getUserById($post->user_id);
+		$current_user = $this->userModel->getUserById($_SESSION["user_id"]);
 
 		$data = [
 			"post" => $post,
-			"user" => $user
+			"user" => $user,
+			"current_user"=> $current_user
 		];
 
 		$this->view("posts/show", $data);
@@ -160,8 +166,10 @@ class Posts extends Controller
 
 			// Get post
 			$post = $this->postModel->getPostById($id);
+			$user = $this->userModel->getUserById($_SESSION['user_id']);
 
-			if ($post->user_id != $_SESSION["user_id"]) {
+
+			if ($post->user_id != $_SESSION["user_id"] || $user->is_admin) {
 				redirect("posts");
 			}
 
