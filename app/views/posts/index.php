@@ -14,10 +14,10 @@
 <?php foreach ($data['posts'] as $post) : ?>
 
 	<div class="card card-body mb-3">
-		
-		<div class="row">
+
+		<div class="row mb-3">
 			<div class="col-5 mx-auto">
-				<img class="img-fluid rounded" src="<?php echo $post->image ? URLROOT.'/uploads/img/' .$post->image : URLROOT.'/uploads/img/default-image.jpg'; ?>" alt="Post image">
+				<img class="img-fluid rounded" src="<?php echo $post->image ? URLROOT . '/uploads/img/' . $post->image : URLROOT . '/uploads/img/default-image.jpg'; ?>" alt="Post image">
 			</div>
 		</div>
 		<h4 class="card-title">

@@ -34,11 +34,11 @@ class Posts extends Controller
 
 			// Sanitize $_POST Array
 			$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-			
+
 
 
 			$data = [
-				"image" =>"",
+				"image" => "",
 				"title" => trim($_POST["title"]),
 				"body" => trim($_POST["body"]),
 				"user_id" => $_SESSION["user_id"],
@@ -46,19 +46,19 @@ class Posts extends Controller
 				"title_err" => "",
 				"body_err" => ""
 			];
-			
-			
+
+
 			// Validate data
-			
+
 			// Validate image 
-			if($_FILES["image"]["name"]){
+			if ($_FILES["image"]["name"]) {
 				$target_dir = __DIR__ . "/../../public/uploads/img/";
-				$image_name = date("Y_m_d").basename($_FILES["image"]["name"]);
+				$image_name = date("Y_m_d") . basename($_FILES["image"]["name"]);
 				$target_file = $target_dir . $image_name;
-				$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+				$imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 				$check = getimagesize($_FILES["image"]["tmp_name"]);
 
-				if($check == false) {
+				if ($check == false) {
 					$data['image_err'] .= "File is not an image. ";
 				}
 
@@ -72,26 +72,25 @@ class Posts extends Controller
 					$data["image_err"] .= "Your file is too large. ";
 				}
 
-				if($imageFileType != "jpg" && $imageFileType != "png" 
-					&& $imageFileType != "jpeg" && $imageFileType != "gif" ) {
-						$data["image_err"] .= "Only JPG, JPEG, PNG & GIF files are allowed. ";
-  
+				if (
+					$imageFileType != "jpg" && $imageFileType != "png"
+					&& $imageFileType != "jpeg" && $imageFileType != "gif"
+				) {
+					$data["image_err"] .= "Only JPG, JPEG, PNG & GIF files are allowed. ";
 				}
-				
-				if(strlen($data['image_err']) == 0){
-				//   Stop here
 
-		
-					
+				if (strlen($data['image_err']) == 0) {
+					//   Stop here
+
+
+
 					if (!move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-		
+
 						$data["image_err"] .= "Sorry, there was an error uploading your file.";
-					  }
-					else{
+					} else {
 						$data["image"] =  $image_name;
 					}
 				}
-
 			}
 
 			if (empty($data["title"])) {
@@ -129,6 +128,12 @@ class Posts extends Controller
 
 	public function edit($id)
 	{
+
+		// Get post
+		$post = $this->postModel->getPostById($id);
+		$user = $this->userModel->getUserById($_SESSION["user_id"]);
+
+
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 			// Sanitize $_POST Array
@@ -137,24 +142,28 @@ class Posts extends Controller
 
 			$data = [
 				"id" => $id,
-				"image" =>'',
+				"image" => $post->image ?? '',
 				"title" => trim($_POST["title"]),
 				"body" => trim($_POST["body"]),
 				"user_id" => $_SESSION["user_id"],
+				"image_err" => "",
 				"title_err" => "",
 				"body_err" => ""
 			];
 
+
+
 			// Validate data
 
-			if($_FILES["image"]["name"]){
+
+			if ($_FILES["image"]["name"]) {
 				$target_dir = __DIR__ . "/../../public/uploads/img/";
-				$image_name = date("Y_m_d").basename($_FILES["image"]["name"]);
+				$image_name = date("Y_m_d") . basename($_FILES["image"]["name"]);
 				$target_file = $target_dir . $image_name;
-				$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+				$imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 				$check = getimagesize($_FILES["image"]["tmp_name"]);
 
-				if($check == false) {
+				if ($check == false) {
 					$data['image_err'] .= "File is not an image. ";
 				}
 
@@ -168,26 +177,25 @@ class Posts extends Controller
 					$data["image_err"] .= "Your file is too large. ";
 				}
 
-				if($imageFileType != "jpg" && $imageFileType != "png" 
-					&& $imageFileType != "jpeg" && $imageFileType != "gif" ) {
-						$data["image_err"] .= "Only JPG, JPEG, PNG & GIF files are allowed. ";
-  
+				if (
+					$imageFileType != "jpg" && $imageFileType != "png"
+					&& $imageFileType != "jpeg" && $imageFileType != "gif"
+				) {
+					$data["image_err"] .= "Only JPG, JPEG, PNG & GIF files are allowed. ";
 				}
-				
-				if(strlen($data['image_err']) == 0){
-				//   Stop here
 
-		
-					
+				if (strlen($data['image_err']) == 0) {
+					//   Stop here
+
+
+
 					if (!move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-		
+
 						$data["image_err"] .= "Sorry, there was an error uploading your file.";
-					  }
-					else{
+					} else {
 						$data["image"] =  $image_name;
 					}
 				}
-
 			}
 
 			if (empty($data["title"])) {
@@ -200,7 +208,7 @@ class Posts extends Controller
 			}
 
 
-			if (empty($data["title_err"]) && empty($data["body_err"])) {
+			if (empty($data["title_err"]) && empty($data["body_err"]) && empty($data["image_err"])) {
 
 				if ($this->postModel->updatePost($data)) {
 					flash("post_message", "Post Updated");
@@ -214,25 +222,17 @@ class Posts extends Controller
 			}
 		} else {
 
-			// Get post
-			$post = $this->postModel->getPostById($id);
-			$user = $this->userModel->getUserById($_SESSION["user_id"]);
+			if ($post->user_id = $_SESSION["user_id"] || $user->is_admin) {
 
-
-
-
-			if ($post->user_id = $_SESSION["user_id"] || $user->is_admin ) {
-				
-			$data = [
-				"id" => $id,
-				"image" => $post->image,
-				"title" => $post->title,
-				"body" => $post->body
-			];			
-			}else{
+				$data = [
+					"id" => $id,
+					"image" => $post->image,
+					"title" => $post->title,
+					"body" => $post->body
+				];
+			} else {
 				redirect("posts");
 			}
-
 		}
 
 		$this->view("posts/edit", $data);
@@ -247,7 +247,7 @@ class Posts extends Controller
 		$data = [
 			"post" => $post,
 			"user" => $user,
-			"current_user"=> $current_user
+			"current_user" => $current_user
 		];
 
 		$this->view("posts/show", $data);

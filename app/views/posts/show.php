@@ -7,9 +7,9 @@
 <div class="bg-secondary text-white p-2 mb-3">
 	Written by <?php echo $data['user']->name . " on " . $data['post']->created_at; ?>
 </div>
-<div class="row">
+<div class="row mb-3">
 	<div class="col-5 mx-auto">
-		<img class="img-fluid rounded" src="<?php echo $data['post']->image ? URLROOT.'/uploads/img/' .$data['post']->image : URLROOT.'/uploads/img/default-image.jpg'; ?>" alt="Post image">
+		<img class="img-fluid rounded" src="<?php echo $data['post']->image ? URLROOT . '/uploads/img/' . $data['post']->image : URLROOT . '/uploads/img/default-image.jpg'; ?>" alt="Post image">
 	</div>
 </div>
 <p><?php echo $data['post']->body; ?></p>
