@@ -8,8 +8,8 @@
 	Written by <?php echo $data["user"]->name . " on " . $data["post"]->created_at; ?>
 </div>
 <div class="row">
-	<div class="col-8 mx-auto">
-		<img class="img-fluid" src="<?php echo $data["post"]->image ? URLROOT."/uploads/img/" .$data['post']->image :''; ?>" alt="Post image">
+	<div class="col-5 mx-auto">
+		<img class="img-fluid rounded" src="<?php echo $data["post"]->image ? URLROOT."/uploads/img/" .$data['post']->image : URLROOT.'/uploads/img/default-image.jpg'; ?>" alt="Post image">
 	</div>
 </div>
 <p><?php echo $data["post"]->body; ?></p>
