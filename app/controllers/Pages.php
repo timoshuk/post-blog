@@ -28,4 +28,9 @@ class Pages extends Controller
 		];
 		$this->view("pages/about", $data);
 	}
+
+	public function not_found()
+	{
+		$this->view("pages/404");
+	}
 }

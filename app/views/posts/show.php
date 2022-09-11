@@ -23,4 +23,13 @@
 	</form>
 <?php endif; ?>
 
+
+<?php if ($_SESSION['user_id']) : ?>
+	<form class="mt-3" action="<?php echo URLROOT; ?>/comments/add/<?php echo $data['post']->id; ?>" method="post">
+		<textarea class="form-control form-control-lg" name="comments_body">Add comment</textarea>
+		<input class="btn btn-dark" type="submit" value="Submit">
+	</form>
+<?php endif; ?>
+
+
 <?php require APPROOT . "/views/inc/footer.php";
