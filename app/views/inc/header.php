@@ -11,7 +11,7 @@
 	<title><?php echo SITENAME; ?></title>
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
 
 	<?php require APPROOT . "/views/inc/navbar.php"; ?>
 

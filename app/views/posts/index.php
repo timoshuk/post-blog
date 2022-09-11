@@ -10,27 +10,32 @@
 		</a>
 	</div>
 </div>
+<div class="row">
 
-<?php foreach ($data['posts'] as $post) : ?>
+	<?php foreach ($data['posts'] as $post) : ?>
+		<div class="col-6">
 
-	<div class="card card-body mb-3">
+			<div class="card card-body mb-3">
 
-		<div class="row mb-3">
-			<div class="col-5 mx-auto">
-				<img class="img-fluid rounded" src="<?php echo $post->image ? URLROOT . '/uploads/img/' . $post->image : URLROOT . '/uploads/img/default-image.jpg'; ?>" alt="Post image">
+				<div class="row mb-3">
+					<div class="col-10 mx-auto">
+						<img class="img-fluid rounded" src="<?php echo $post->image ? URLROOT . '/uploads/img/' . $post->image : URLROOT . '/uploads/img/default-image.jpg'; ?>" alt="Post image">
+					</div>
+				</div>
+				<h4 class="card-title">
+					<?php echo $post->title; ?>
+				</h4>
+				<div class="bg-light p-2 mb-3">
+					Written by user <?php echo $post->name . " on " . $post->postCreated; ?>
+				</div>
+				<p class="card-text"><?php echo trimStr($post->body); ?></p>
+				<a href="<?php echo URLROOT; ?>/posts/show/<?php echo $post->postId; ?>" class="btn btn-dark">More</a>
 			</div>
 		</div>
-		<h4 class="card-title">
-			<?php echo $post->title; ?>
-		</h4>
-		<div class="bg-light p-2 mb-3">
-			Written by user <?php echo $post->name . " on " . $post->postCreated; ?>
-		</div>
-		<p class="card-text"><?php echo $post->body; ?></p>
-		<a href="<?php echo URLROOT; ?>/posts/show/<?php echo $post->postId; ?>" class="btn btn-dark">More</a>
-	</div>
+		<!-- End col-6 -->
 
-<?php endforeach; ?>
-
+	<?php endforeach; ?>
+</div>
+<!-- End row -->
 
 <?php require APPROOT . "/views/inc/footer.php"; ?>

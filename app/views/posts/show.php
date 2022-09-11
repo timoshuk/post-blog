@@ -35,7 +35,7 @@
 <?php foreach ($data['comments'] as $comment) : ?>
 
 	<div class="card card-body mb-3 mt-3">
-		<p><?php echo $comment->comments_body; ?></p>
+		<p class="lead"><?php echo $comment->comments_body; ?></p>
 
 		<?php if ($comment->user_id == $_SESSION['user_id'] || $data['current_user'] && $data['current_user']->is_admin) : ?>
 			<div class="row">

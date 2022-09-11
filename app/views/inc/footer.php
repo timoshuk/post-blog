@@ -3,13 +3,15 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous"></script>
 
 
-<footer class="p-3 mt-3 text-center bg-dark text-light">
-  <p><?php echo date("Y");?></p>
+</div>
+<!-- container -->
+
+<footer class="footer p-3 mt-3 text-center bg-dark text-light">
+	<p><?php echo date("Y"); ?></p>
 </footer>
+
 <script src="<?php echo URLROOT; ?>/js/main.js"></script>
 </body>
 
-</div>
-<!-- container -->
 
 </html>

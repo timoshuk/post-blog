@@ -20,8 +20,8 @@
 		</div>
 		<!-- form-group -->
 		<div class="form-group">
-			<label for="body">Password: <sup>*</sup></label>
-			<textarea name="body" class="form-control form-control-lg 
+			<label for="body">Content: <sup>*</sup></label>
+			<textarea name="body" rows="10" class="form-control form-control-lg 
 					<?php echo (!empty($data['body_err']) ? "is-invalid" : ""); ?>"><?php echo $data['body']; ?></textarea>
 			<span class="invalid-feedback"><?php echo $data['body_err']; ?></span>
 		</div>
