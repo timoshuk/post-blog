@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 09, 2022 at 08:32 AM
+-- Generation Time: Sep 11, 2022 at 08:04 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `posts` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `image` varchar(500) NOT NULL,
   `title` varchar(255) NOT NULL,
   `body` text NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp()
@@ -39,8 +40,9 @@ CREATE TABLE `posts` (
 -- Dumping data for table `posts`
 --
 
-INSERT INTO `posts` (`id`, `user_id`, `title`, `body`, `created_at`) VALUES
-(18, 3, 'afdhgg', 'fsdfs', '2022-09-08 15:46:07');
+INSERT INTO `posts` (`id`, `user_id`, `image`, `title`, `body`, `created_at`) VALUES
+(24, 3, '', 'admin', 'admin post', '2022-09-09 10:15:05'),
+(52, 5, '', 'ljljk', 'jhkjhkj', '2022-09-11 08:39:36');
 
 -- --------------------------------------------------------
 
@@ -53,15 +55,18 @@ CREATE TABLE `users` (
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `is_admin` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`) VALUES
-(3, 'Oleksandr Timoshchuk', 'aa@aa.aa', '$2y$10$PEyRAG/dmZfOlZJo2VJGJOVdk2saW05FyFVtypo21m.kUTmNgmY0.', '2022-09-05 21:34:12');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`, `is_admin`) VALUES
+(3, 'Oleksandr Timoshchuk', 'aa@aa.aa', '$2y$10$PEyRAG/dmZfOlZJo2VJGJOVdk2saW05FyFVtypo21m.kUTmNgmY0.', '2022-09-05 21:34:12', 1),
+(4, 'cc', 'cc@cc.cc', '$2y$10$zyyO6awbUGhKaT9I/wJoa.9KQMj0Rhq8ppZewJrRKXE1q8vgBf.Iq', '2022-09-09 09:44:51', 0),
+(5, 'Jon Dou', 'dd@dd.dd', '$2y$10$cMUF2EtncPr9jJKcitQVLuJusOzpr00LWLDLahYNt5T2hNqqEws0i', '2022-09-11 08:38:50', 0);
 
 --
 -- Indexes for dumped tables
@@ -87,13 +92,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
