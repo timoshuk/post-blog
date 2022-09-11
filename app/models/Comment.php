@@ -57,10 +57,11 @@ class Comment
 	public function updateComment($data)
 	{
 
-		$this->db->query("UPDATE comments SET , comments_body = :comments_body WHERE comments_id = :id");
+
+		$this->db->query("UPDATE comments SET comments_body = :comments_body WHERE comments_id = :comments_id");
 
 		//Bind values
-		$this->db->bind(":comments_id", $data["id"]);
+		$this->db->bind(":comments_id", $data["comments_id"]);
 		$this->db->bind(":comments_body", $data["comments_body"]);
 
 

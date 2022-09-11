@@ -80,7 +80,7 @@ class Comments extends Controller
 
 			$data = [
 				"comments_body" => trim($_POST["comments_body"]),
-				'comments_id' => $comment->comments_id,
+				"comments_id" => $id,
 				"comments_body_err" => ""
 			];
 
@@ -110,7 +110,8 @@ class Comments extends Controller
 					"comments_id" => $id,
 					"user_id" => $comment->user_id,
 					"post_id" => $comment->post_id,
-					"comments_body" => $comment->comments_body
+					"comments_body" => $comment->comments_body,
+					"comments_body_err" => ""
 				];
 			} else {
 				redirect("posts/show/{$comment->post_id}");
