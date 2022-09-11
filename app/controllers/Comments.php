@@ -121,42 +121,27 @@ class Comments extends Controller
 		$this->view("comments/edit", $data);
 	}
 
-	public function show($id)
+	public function delete($commentId)
 	{
-		$post = $this->postModel->getPostById($id);
-		$user = $this->userModel->getUserById($post->user_id);
-		$current_user = $this->userModel->getUserById($_SESSION["user_id"]);
 
-		$data = [
-			"post" => $post,
-			"user" => $user,
-			"current_user" => $current_user
-		];
-
-		$this->view("posts/show", $data);
-	}
-
-	public function delete($id)
-	{
+		// Get comment
+		$comment = $this->commentModel->getCommentById($commentId);
+		$user = $this->userModel->getUserById($_SESSION['user_id']);
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-			// Get post
-			$post = $this->postModel->getPostById($id);
-			$user = $this->userModel->getUserById($_SESSION['user_id']);
 
 
-			if ($post->user_id != $_SESSION["user_id"] || !$user->is_admin) {
+			if ($comment->user_id != $_SESSION["user_id"] || !$user->is_admin) {
 				redirect("posts");
 			}
 
-			if ($this->postModel->deletePost($id)) {
-				flash("post_message", "Post Removed");
-				redirect("posts");
+			if ($this->commentModel->deleteComment($commentId)) {
+				redirect("posts/show/{$comment->post_id}");
 			} else {
 				die("Something went wrong");
 			}
 		} else {
-			redirect("posts");
+			redirect("posts/show/{$comment->post_id}");
 		}
 	}
 }

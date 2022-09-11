@@ -72,12 +72,12 @@ class Comment
 		}
 	}
 
-	public function deleteComments($id)
+	public function deleteComment($commentId)
 	{
-		$this->db->query("DELETE FROM posts WHERE id = :id");
+		$this->db->query("DELETE FROM comments WHERE comments_id = :comment_id");
 
 		//Bind values
-		$this->db->bind(":id", $id);
+		$this->db->bind(":comment_id", $commentId);
 
 
 		if ($this->db->execute()) {
