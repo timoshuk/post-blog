@@ -1,5 +1,5 @@
 <?php require APPROOT . "/views/inc/header.php"; ?>
-<?php flash("post_message"); ?>
+<?php flash('post_message'); ?>
 <div class="row">
 	<div class="col-md-6">
 		<h1>Posts</h1>
@@ -11,7 +11,7 @@
 	</div>
 </div>
 
-<?php foreach ($data["posts"] as $post) : ?>
+<?php foreach ($data['posts'] as $post) : ?>
 
 	<div class="card card-body mb-3">
 		

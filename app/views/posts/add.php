@@ -5,7 +5,7 @@
 <div class="card card-body bg-light mt-5">
 	<h2>Add Post</h2>
 	<form action="<?php echo URLROOT; ?>/posts/add" method="post" enctype="multipart/form-data">
-	<div class="form-group">
+		<div class="form-group">
 			<label for="image">Post image:</label>
 			<input type="file" name="image" class="form-control form-control-lg 
 					<?php echo (!empty($data['image_err']) ? 'is-invalid' : ''); ?>">
