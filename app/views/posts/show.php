@@ -27,9 +27,32 @@
 <?php if ($_SESSION['user_id']) : ?>
 	<form class="mt-3" action="<?php echo URLROOT; ?>/comments/add/<?php echo $data['post']->id; ?>" method="post">
 		<textarea class="form-control form-control-lg" name="comments_body">Add comment</textarea>
-		<input class="btn btn-dark" type="submit" value="Submit">
+		<input class="btn btn-dark mt-3" type="submit" value="Submit">
 	</form>
 <?php endif; ?>
+
+
+<?php foreach ($data['comments'] as $comment) : ?>
+
+	<div class="card card-body mb-3 mt-3">
+		<p><?php echo $comment->comments_body; ?></p>
+
+		<?php if ($comment->user_id == $_SESSION['user_id'] || $data['current_user'] && $data['current_user']->is_admin) : ?>
+			<div class="row">
+				<div class="col-6"><a href="<?php echo URLROOT; ?>/comments/edit/<?php echo $comment->comments_id; ?>" class="btn btn-dark">Edit</a></div>
+				<div class="col-6">
+					<form class="float-end" action="<?php echo URLROOT; ?>/comments/delete/<?php echo $comment->comments_id; ?>" method="post">
+						<input type="submit" value="Delete" class="btn btn-danger">
+					</form>
+				</div>
+			</div>
+
+
+		<?php endif; ?>
+
+	</div>
+
+<?php endforeach; ?>
 
 
 <?php require APPROOT . "/views/inc/footer.php";

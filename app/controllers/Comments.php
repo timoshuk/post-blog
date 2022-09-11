@@ -11,6 +11,7 @@ class Comments extends Controller
 		}
 
 		$this->commentModel = $this->model("Comment");
+		$this->userModel = $this->model("User");
 	}
 
 	public function index()
@@ -68,9 +69,8 @@ class Comments extends Controller
 	{
 
 		// Get post
-		$post = $this->postModel->getPostById($id);
+		$comment = $this->commentModel->getCommentById($id);
 		$user = $this->userModel->getUserById($_SESSION["user_id"]);
-
 
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -79,101 +79,45 @@ class Comments extends Controller
 
 
 			$data = [
-				"id" => $id,
-				"image" => $post->image ?? "",
-				"title" => trim($_POST["title"]),
-				"body" => trim($_POST["body"]),
-				"user_id" => $_SESSION["user_id"],
-				"image_err" => "",
-				"title_err" => "",
-				"body_err" => ""
+				"comments_body" => trim($_POST["comments_body"]),
+				'comments_id' => $comment->comments_id,
+				"comments_body_err" => ""
 			];
 
 
 
-			// Validate data
-
-
-			if ($_FILES["image"]["name"]) {
-				$target_dir = __DIR__ . "/../../public/uploads/img/";
-				$image_name = date("Y_m_d") . basename($_FILES["image"]["name"]);
-				$target_file = $target_dir . $image_name;
-				$imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-				$check = getimagesize($_FILES["image"]["tmp_name"]);
-
-				if ($check == false) {
-					$data['image_err'] .= "File is not an image. ";
-				}
-
-				// Check if file already exists
-				if (file_exists($target_file)) {
-					$data["image_err"] .= "Sorry, file already exists. ";
-				}
-
-				// Check file size
-				if ($_FILES["image"]["size"] > 900000) {
-					$data["image_err"] .= "Your file is too large. ";
-				}
-
-				if (
-					$imageFileType != "jpg" && $imageFileType != "png"
-					&& $imageFileType != "jpeg" && $imageFileType != "gif"
-				) {
-					$data["image_err"] .= "Only JPG, JPEG, PNG & GIF files are allowed. ";
-				}
-
-				if (strlen($data['image_err']) == 0) {
-					//   Stop here
-
-
-
-					if (!move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-
-						$data["image_err"] .= "Sorry, there was an error uploading your file.";
-					} else {
-						$data["image"] =  $image_name;
-					}
-				}
-			}
-
-			if (empty($data["title"])) {
-				$data["title_err"] = "Please enter title";
+			if (empty($data["comments_body"])) {
+				$data["comments_body_err"] = "Please enter comment body";
 			}
 
 
-			if (empty($data["body"])) {
-				$data["body_err"] = "Please enter body";
-			}
+			if (empty($data["comments_body_err"])) {
 
-
-			if (empty($data["title_err"]) && empty($data["body_err"]) && empty($data["image_err"])) {
-
-				if ($this->postModel->updatePost($data)) {
-					flash("post_message", "Post Updated");
-					redirect("post");
+				if ($this->commentModel->updateComment($data)) {
+					redirect("posts/show/{$comment->post_id}");
 				} else {
 					die("Something went wrong");
 				}
 			} else {
 				// Load view with errors 
-				$this->view("posts/edit", $data);
+				$this->view("comments/edit", $data);
 			}
 		} else {
 
-			if ($post->user_id = $_SESSION["user_id"] || $user->is_admin) {
+			if ($comment->user_id = $_SESSION["user_id"] || $user->is_admin) {
 
 				$data = [
-					"id" => $id,
-					"image" => $post->image,
-					"title" => $post->title,
-					"body" => $post->body
+					"comments_id" => $id,
+					"user_id" => $comment->user_id,
+					"post_id" => $comment->post_id,
+					"comments_body" => $comment->comments_body
 				];
 			} else {
-				redirect("posts");
+				redirect("posts/show/{$comment->post_id}");
 			}
 		}
 
-		$this->view("posts/edit", $data);
+		$this->view("comments/edit", $data);
 	}
 
 	public function show($id)

@@ -33,10 +33,20 @@ class Comment
 
 
 
-	public function getCommentsById($id)
+	public function getCommentsByPostId($postId)
 	{
-		$this->db->query("SELECT * FROM posts WHERE id = :id");
-		$this->db->bind(":id", $id);
+		$this->db->query("SELECT * FROM comments WHERE post_id = :post_id");
+		$this->db->bind(":post_id", $postId);
+
+		$row = $this->db->resultSet();
+
+		return $row;
+	}
+
+	public function getCommentById($commentId)
+	{
+		$this->db->query("SELECT * FROM comments WHERE comments_id = :comment_id ");
+		$this->db->bind(":comment_id", $commentId);
 
 		$row = $this->db->single();
 
@@ -44,16 +54,14 @@ class Comment
 	}
 
 
-	public function updateComments($data)
+	public function updateComment($data)
 	{
 
-		$this->db->query("UPDATE posts SET image = :image, title = :title, body = :body WHERE id = :id");
+		$this->db->query("UPDATE comments SET , comments_body = :comments_body WHERE comments_id = :id");
 
 		//Bind values
-		$this->db->bind(":id", $data["id"]);
-		$this->db->bind(":image", $data["image"]);
-		$this->db->bind(":title", $data["title"]);
-		$this->db->bind(":body", $data["body"]);
+		$this->db->bind(":comments_id", $data["id"]);
+		$this->db->bind(":comments_body", $data["comments_body"]);
 
 
 		if ($this->db->execute()) {
