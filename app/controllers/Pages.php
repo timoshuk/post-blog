@@ -16,7 +16,6 @@ class Pages extends Controller
 			"description" => "Simple social network"
 		];
 
-
 		$this->view("pages/index", $data);
 	}
 
@@ -26,6 +25,7 @@ class Pages extends Controller
 			"title" => "About Us",
 			"description" => "App to share posts"
 		];
+
 		$this->view("pages/about", $data);
 	}
 

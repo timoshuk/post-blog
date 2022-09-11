@@ -36,12 +36,10 @@ class Users extends Controller
 				}
 			}
 
-
 			// Validate Name
 			if (empty($data["name"])) {
 				$data["name_err"] = "Please enter password";
 			}
-
 
 			// Validate Password
 			if (empty($data["password"])) {
@@ -49,9 +47,6 @@ class Users extends Controller
 			} elseif (strlen($data["password"]) < 6) {
 				$data["password_err"] = "Password length must be at least 6 characters";
 			}
-
-
-
 
 			//// Validate confirm password
 			if (empty($data["confirm_password"])) {
@@ -62,11 +57,9 @@ class Users extends Controller
 				}
 			}
 
-
 			if (empty($data["email_err"]) && empty($data["name_err"]) && empty($data["password_err"]) && empty($data["confirm_password_err"])) {
 				// Validated
 				//Hash Password
-
 				$data["password"] = password_hash($data["password"], PASSWORD_DEFAULT);
 
 				// Register user
@@ -91,9 +84,6 @@ class Users extends Controller
 				"password_err" => "",
 				"confirm_password_err" => "",
 			];
-
-
-
 
 			// Load View
 			$this->view("users/register", $data);
@@ -126,7 +116,6 @@ class Users extends Controller
 			if (empty($data["password"])) {
 				$data["password_err"] = "Please enter password";
 			}
-
 
 			//Check user email
 			if ($this->userModel->findUserByEmail($data["email"])) {

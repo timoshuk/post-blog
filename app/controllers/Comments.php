@@ -16,22 +16,16 @@ class Comments extends Controller
 
 	public function index()
 	{
-
-
 		$this->view("pages/404");
 	}
 
 
 	public function add($postId)
 	{
-
-
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 			// Sanitize $_POST Array
 			$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-
 
 			$data = [
 				"comments_body" => trim($_POST["comments_body"]),
@@ -40,14 +34,10 @@ class Comments extends Controller
 				"comments_body_err" => ""
 			];
 
-
-
 			// Validate data
-
 			if (empty($data["comments_body"])) {
 				$data["comments_body_err"] = "Please enter comment body";
 			}
-
 
 			if (empty($data["comments_body_err"])) {
 
@@ -57,7 +47,6 @@ class Comments extends Controller
 					die("Something went wrong");
 				}
 			} else {
-				// Load view with errors 
 				redirect("posts/show/$postId");
 			}
 		}
@@ -68,15 +57,12 @@ class Comments extends Controller
 	public function edit($id)
 	{
 
-		// Get post
 		$comment = $this->commentModel->getCommentById($id);
 		$user = $this->userModel->getUserById($_SESSION["user_id"]);
 
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
 			// Sanitize $_POST Array
 			$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
 
 			$data = [
 				"comments_body" => trim($_POST["comments_body"]),
@@ -84,12 +70,9 @@ class Comments extends Controller
 				"comments_body_err" => ""
 			];
 
-
-
 			if (empty($data["comments_body"])) {
 				$data["comments_body_err"] = "Please enter comment body";
 			}
-
 
 			if (empty($data["comments_body_err"])) {
 
@@ -123,18 +106,14 @@ class Comments extends Controller
 
 	public function delete($commentId)
 	{
-
-		// Get comment
 		$comment = $this->commentModel->getCommentById($commentId);
 		$user = $this->userModel->getUserById($_SESSION['user_id']);
+
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-
 
 			if ($comment->user_id != $_SESSION["user_id"] || !$user->is_admin) {
 				redirect("posts");
 			}
-
 			if ($this->commentModel->deleteComment($commentId)) {
 				redirect("posts/show/{$comment->post_id}");
 			} else {

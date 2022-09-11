@@ -18,7 +18,6 @@ class Posts extends Controller
 	public function index()
 	{
 		//Get all post
-
 		$posts = $this->postModel->getPosts();
 
 		$data = [
@@ -36,8 +35,6 @@ class Posts extends Controller
 			// Sanitize $_POST Array
 			$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-
-
 			$data = [
 				"image" => "",
 				"title" => trim($_POST["title"]),
@@ -48,10 +45,7 @@ class Posts extends Controller
 				"body_err" => ""
 			];
 
-
 			// Validate data
-
-			// Validate image 
 			if ($_FILES["image"]["name"]) {
 				$target_dir = __DIR__ . "/../../public/uploads/img/";
 				$image_name = date("Y_m_d") . basename($_FILES["image"]["name"]);
@@ -81,9 +75,6 @@ class Posts extends Controller
 				}
 
 				if (strlen($data['image_err']) == 0) {
-					//   Stop here
-
-
 
 					if (!move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
 
@@ -98,11 +89,9 @@ class Posts extends Controller
 				$data["title_err"] = "Please enter title";
 			}
 
-
 			if (empty($data["body"])) {
 				$data["body_err"] = "Please enter body";
 			}
-
 
 			if (empty($data["title_err"]) && empty($data["body_err"]) && empty($data["image_err"])) {
 
@@ -129,17 +118,14 @@ class Posts extends Controller
 
 	public function edit($id)
 	{
-
 		// Get post
 		$post = $this->postModel->getPostById($id);
 		$user = $this->userModel->getUserById($_SESSION["user_id"]);
-
 
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 			// Sanitize $_POST Array
 			$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
 
 			$data = [
 				"id" => $id,
@@ -152,11 +138,7 @@ class Posts extends Controller
 				"body_err" => ""
 			];
 
-
-
 			// Validate data
-
-
 			if ($_FILES["image"]["name"]) {
 				$target_dir = __DIR__ . "/../../public/uploads/img/";
 				$image_name = date("Y_m_d") . basename($_FILES["image"]["name"]);
@@ -186,12 +168,8 @@ class Posts extends Controller
 				}
 
 				if (strlen($data['image_err']) == 0) {
-					//   Stop here
-
-
 
 					if (!move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-
 						$data["image_err"] .= "Sorry, there was an error uploading your file.";
 					} else {
 						$data["image"] =  $image_name;
@@ -246,7 +224,6 @@ class Posts extends Controller
 		$comments = $this->commentModel->getCommentsByPostId($id);
 		$current_user = $this->userModel->getUserById($_SESSION["user_id"]);
 
-
 		$data = [
 			"post" => $post,
 			"user" => $user,
@@ -263,8 +240,8 @@ class Posts extends Controller
 
 			// Get post
 			$post = $this->postModel->getPostById($id);
-			$user = $this->userModel->getUserById($_SESSION['user_id']);
-
+			$user = $this
+				->userModel->getUserById($_SESSION['user_id']);
 
 			if ($post->user_id != $_SESSION["user_id"] || !$user->is_admin) {
 				redirect("posts");
@@ -272,9 +249,13 @@ class Posts extends Controller
 
 			if ($this->postModel->deletePost($id)) {
 				flash("post_message", "Post Removed");
+			} else {
+				die("Something went wrong. Post is not deleted");
+			}
+			if ($this->commentModel->deleteCommentsByPostId($post->id)) {
 				redirect("posts");
 			} else {
-				die("Something went wrong");
+				die("Something went wrong. Post comments is not deleted");
 			}
 		} else {
 			redirect("posts");
