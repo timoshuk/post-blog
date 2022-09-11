@@ -2,8 +2,8 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Sep 11, 2022 at 08:04 AM
+-- Host: 127.0.0.1
+-- Generation Time: Sep 11, 2022 at 04:14 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -24,6 +24,19 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `comments`
+--
+
+CREATE TABLE `comments` (
+  `comments_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL,
+  `comments_body` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `posts`
 --
 
@@ -35,14 +48,6 @@ CREATE TABLE `posts` (
   `body` text NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `posts`
---
-
-INSERT INTO `posts` (`id`, `user_id`, `image`, `title`, `body`, `created_at`) VALUES
-(24, 3, '', 'admin', 'admin post', '2022-09-09 10:15:05'),
-(52, 5, '', 'ljljk', 'jhkjhkj', '2022-09-11 08:39:36');
 
 -- --------------------------------------------------------
 
@@ -64,13 +69,17 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`, `is_admin`) VALUES
-(3, 'Oleksandr Timoshchuk', 'aa@aa.aa', '$2y$10$PEyRAG/dmZfOlZJo2VJGJOVdk2saW05FyFVtypo21m.kUTmNgmY0.', '2022-09-05 21:34:12', 1),
-(4, 'cc', 'cc@cc.cc', '$2y$10$zyyO6awbUGhKaT9I/wJoa.9KQMj0Rhq8ppZewJrRKXE1q8vgBf.Iq', '2022-09-09 09:44:51', 0),
-(5, 'Jon Dou', 'dd@dd.dd', '$2y$10$cMUF2EtncPr9jJKcitQVLuJusOzpr00LWLDLahYNt5T2hNqqEws0i', '2022-09-11 08:38:50', 0);
+(3, 'Oleksandr Timoshchuk', 'aa@aa.aa', '$2y$10$PEyRAG/dmZfOlZJo2VJGJOVdk2saW05FyFVtypo21m.kUTmNgmY0.', '2022-09-05 21:34:12', 1);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`comments_id`);
 
 --
 -- Indexes for table `posts`
@@ -89,16 +98,22 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `comments_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
