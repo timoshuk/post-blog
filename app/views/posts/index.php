@@ -28,7 +28,7 @@
 				<div class="bg-light p-2 mb-3">
 					Written by user <?php echo $post->name . " on " . $post->postCreated; ?>
 				</div>
-				<p class="card-text"><?php echo trimStr($post->body); ?></p>
+				<p class="card-text"><?php echo trimStr($post->body, 300); ?></p>
 				<a href="<?php echo URLROOT; ?>/posts/show/<?php echo $post->postId; ?>" class="btn btn-dark">More</a>
 			</div>
 		</div>
